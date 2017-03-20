@@ -192,23 +192,24 @@ public class YourEvaluator extends Evaluator {
                 }
                 if (p.board[x][y] == p.WRook) {
                     white += 500 + RValues[x][y];
-                    // Rook file and row dominance.
-//                    boolean emptyFile = true;
-//                    boolean emptyRow = true;
-//                    for (int i = 0; i < p.board.length; i++) {
-//                        if (p.board[x][i] != WRook && p.board[x][i] != Empty) {
-//                            emptyFile = false;
-//                        }
-//                        if (p.board[i][x] != WRook && p.board[i][x] != Empty) {
-//                            emptyRow = false;
-//                        }
-//                    }
-//                    if (!emptyFile) {
-//                        white += 30;
-//                    }
-//                    if (!emptyFile) {
-//                        white += 10;
-//                    }
+                    /* Rook file and row dominance. Not worth it.
+                    boolean emptyFile = true;
+                    boolean emptyRow = true;
+                    for (int i = 0; i < p.board.length; i++) {
+                        if (p.board[x][i] != WRook && p.board[x][i] != Empty) {
+                            emptyFile = false;
+                        }
+                        if (p.board[i][x] != WRook && p.board[i][x] != Empty) {
+                            emptyRow = false;
+                        }
+                    }
+                    if (!emptyFile) {
+                        white += 30;
+                    }
+                    if (!emptyFile) {
+                        white += 10;
+                    }
+                     */
 
                 }
                 if (p.board[x][y] == p.WKnight) {
@@ -247,23 +248,24 @@ public class YourEvaluator extends Evaluator {
                 }
                 if (p.board[x][y] == p.BRook) {
                     black += 510 + RValues[5 - x][y];
-                    // Rook file and row dominance.
-//                    boolean emptyFile = true;
-//                    boolean emptyRow = true;
-//                    for (int i = 0; i < p.board.length; i++) {
-//                        if (p.board[x][i] != BRook && p.board[x][i] != Empty) {
-//                            emptyFile = false;
-//                        }
-//                        if (p.board[i][x] != BRook && p.board[i][x] != Empty) {
-//                            emptyRow = false;
-//                        }
-//                    }
-//                    if (!emptyFile) {
-//                        black += 30;
-//                    }
-//                    if (!emptyFile) {
-//                        black += 10;
-//                    }
+                    /* Rook file and row dominance. Not worth it.
+                    boolean emptyFile = true;
+                    boolean emptyRow = true;
+                    for (int i = 0; i < p.board.length; i++) {
+                        if (p.board[x][i] != BRook && p.board[x][i] != Empty) {
+                            emptyFile = false;
+                        }
+                        if (p.board[i][x] != BRook && p.board[i][x] != Empty) {
+                            emptyRow = false;
+                        }
+                    }
+                    if (!emptyFile) {
+                        black += 30;
+                    }
+                    if (!emptyFile) {
+                        black += 10;
+                    } 
+                    */
                 }
                 if (p.board[x][y] == p.BKnight) {
                     black += 320 + NValues[5 - x][y];
@@ -376,11 +378,8 @@ public class YourEvaluator extends Evaluator {
                 }
 
                 if (pval == WQueen || pval == BQueen) {
-                    // Queens can move like bishops:
                     for (int i = 0; i < Bx.length; ++i) {
-                        // for all the directions
                         for (int j = 0; j < Bx[i].length; ++j) {
-                            // once a direction is obstructed, finish!!
                             int x2 = Bx[i][j] + x;
                             int y2 = By[i][j] + y;
                             if (!isInside(x2, y2)) {
@@ -403,17 +402,12 @@ public class YourEvaluator extends Evaluator {
                             }
 
                             if (p.board[x2][y2] != Empty) {
-                                // ate it, and finished direction
                                 break;
                             }
                         }
                     }
-
-                    // Queens can also move like rooks:
                     for (int i = 0; i < Rx.length; ++i) {
-                        // for all the directions
                         for (int j = 0; j < Rx[i].length; ++j) {
-                            // once a direction is obstructed, finish!!
                             int x2 = Rx[i][j] + x;
                             int y2 = Ry[i][j] + y;
                             if (!isInside(x2, y2)) {
@@ -436,7 +430,6 @@ public class YourEvaluator extends Evaluator {
                             }
 
                             if (p.board[x2][y2] != Empty) {
-                                // ate it, and finished direction
                                 break;
                             }
                         }
@@ -446,9 +439,7 @@ public class YourEvaluator extends Evaluator {
 
                 if (pval == WRook || pval == BRook) {
                     for (int i = 0; i < Rx.length; ++i) {
-                        // for all the directions
                         for (int j = 0; j < Rx[i].length; ++j) {
-                            // once a direction is obstructed, finish!!
                             int x2 = Rx[i][j] + x;
                             int y2 = Ry[i][j] + y;
                             if (!isInside(x2, y2)) {
@@ -471,7 +462,6 @@ public class YourEvaluator extends Evaluator {
                             }
 
                             if (p.board[x2][y2] != Empty) {
-                                // ate it, and finished direction
                                 break;
                             }
                         }
@@ -509,8 +499,6 @@ public class YourEvaluator extends Evaluator {
                     boolean allowedMoves[] = new boolean[4];
                     // 1 step forward
                     allowedMoves[0] = isInside(x, y + 1) && p.board[x][y + 1] == Empty;
-                    // 2 steps forward (not in Los Alamos chess)
-                    allowedMoves[1] = bRows == 8 && isInside(x, y + 2) && y == 1 && allowedMoves[0] && p.board[x][y + 2] == Empty;
                     // eat left
                     allowedMoves[2] = isInside(x - 1, y + 1) && isBlackPiece(p.board[x - 1][y + 1]);
                     // eat right
@@ -538,8 +526,6 @@ public class YourEvaluator extends Evaluator {
                     boolean allowedMoves[] = new boolean[4];
                     // 1 step forward
                     allowedMoves[0] = isInside(x, y - 1) && p.board[x][y - 1] == Empty;
-                    // 2 steps forward (not in Los Alamos chess)
-                    allowedMoves[1] = bRows == 8 && isInside(x, y - 2) && y == 6 && allowedMoves[0] && p.board[x][y - 2] == Empty;
                     // eat right
                     allowedMoves[2] = isInside(x - 1, y - 1) && isWhitePiece(p.board[x - 1][y - 1]);
                     // eat left
